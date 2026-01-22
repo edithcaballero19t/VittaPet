@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VittaPet | Nutrición y Bienestar para Mascotas</title>
+    <meta name="description" content="Tu tienda de confianza para mascotas en Honduras, El Salvador y Guatemala.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0f4c75; /* Azul Confiable */
+            --secondary: #3282b8; /* Azul Médico */
+            --accent: #00b894; /* Verde Salud */
+            --dark: #1b262c;
+            --light: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); background-color: #f4f7f6; scroll-behavior: smooth; }
+        h1, h2, h3, .brand { font-family: 'Poppins', sans-serif; }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .brand { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .brand span { color: var(--accent); }
+
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.9rem; transition: var(--transition); }
+        nav a:hover { color: var(--secondary); }
+
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; }
+        .cart-count { 
+            position: absolute; top: -8px; right: -10px; 
+            background: var(--accent); color: white; 
+            font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; 
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(15, 76, 117, 0.7), rgba(15, 76, 117, 0.7)), 
+                        url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 1rem;
+        }
+
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-inline: auto; }
+        .btn { 
+            padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;
+            transition: var(--transition); display: inline-block; cursor: pointer; border: none;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4); }
+
+        /* --- Benefits --- */
+        .benefits { padding: 4rem 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
+        .benefit-card i { font-size: 2rem; color: var(--secondary); margin-bottom: 1rem; }
+        .benefit-card h3 { margin-bottom: 0.5rem; }
+
+        /* --- Catalog / Store --- */
+        .section-title { text-align: center; margin: 4rem 0 2rem; font-size: 2rem; }
+        .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--secondary); background: none; cursor: pointer; transition: var(--transition); }
+        .filter-btn.active, .filter-btn:hover { background: var(--secondary); color: white; }
+
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 2.5rem; padding: 0 5% 4rem; 
+        }
+
+        .product-card {
+            background: var(--white); border-radius: 15px; overflow: hidden;
+            box-shadow: var(--shadow); transition: var(--transition); position: relative;
+        }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-img { width: 100%; height: 250px; object-fit: cover; }
+        .product-info { padding: 1.5rem; }
+        .product-tag { font-size: 0.7rem; text-transform: uppercase; color: var(--secondary); font-weight: 700; }
+        .product-name { font-size: 1.2rem; margin: 0.5rem 0; color: var(--dark); }
+        .product-price { color: var(--primary); font-weight: 700; margin-bottom: 1rem; font-size: 1.1rem; }
+        .price-alt { display: block; font-size: 0.85rem; color: #777; font-weight: 400; }
+        
+        .add-to-cart { 
+            width: 100%; padding: 10px; border: none; background: var(--primary); 
+            color: white; border-radius: 8px; cursor: pointer; font-weight: 600;
+        }
+
+        /* --- About Us --- */
+        .about { padding: 5rem 5%; background: var(--white); display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-img { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+        .about-img img { width: 100%; display: block; }
+
+        /* --- Cart Sidebar --- */
+        .cart-overlay {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2000; transition: 0.4s;
+        }
+        .cart-overlay.active { right: 0; }
+        .cart-sidebar {
+            position: absolute; right: 0; top: 0; width: 400px; height: 100%;
+            background: var(--white); padding: 2rem; display: flex; flex-direction: column;
+        }
+        @media (max-width: 450px) { .cart-sidebar { width: 100%; } }
+        
+        .cart-header { display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        .cart-items { flex: 1; overflow-y: auto; }
+        .cart-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center; }
+        .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .qty-btn { background: #eee; border: none; width: 25px; height: 25px; border-radius: 4px; cursor: pointer; }
+
+        .cart-footer { border-top: 1px solid #eee; padding-top: 1.5rem; }
+        .total-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-bottom: 1.5rem; }
+
+        /* --- Contact --- */
+        .contact { padding: 5rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 8px; outline: none;
+        }
+        .contact-form textarea { height: 150px; }
+
+        footer { background: var(--dark); color: white; padding: 4rem 5% 2rem; text-align: center; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left; }
+        .footer-col h4 { margin-bottom: 1.2rem; color: var(--accent); }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; opacity: 0.8; }
+
+        /* Floating WhatsApp */
+        .btn-wpp-float {
+            position: fixed; bottom: 30px; left: 30px; background: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 999; text-decoration: none; transition: var(--transition);
+        }
+        .btn-wpp-float:hover { transform: scale(1.1); }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white;
+            padding: 12px 25px; border-radius: 8px; transform: translateY(100px); transition: 0.5s; z-index: 3000;
+        }
+        #toast.show { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand"><i class="fas fa-paw"></i> Vitta<span>Pet</span></a>
+        <nav>
+            <ul id="menu">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#catalogo">Tienda</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Salud y Felicidad para tu Mejor Amigo</h1>
+            <p>Especialistas en nutrición premium y cuidados veterinarios con envíos a toda Centroamérica.</p>
+            <a href="#catalogo" class="btn btn-primary">Ver Catálogo</a>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="benefit-card">
+            <i class="fas fa-truck-fast"></i>
+            <h3>Envíos Regionales</h3>
+            <p>Entregas rápidas en Honduras, El Salvador y Guatemala.</p>
+        </div>
+        <div class="benefit-card">
+            <i class="fas fa-shield-dog"></i>
+            <h3>Calidad Certificada</h3>
+            <p>Solo marcas con respaldo médico y nutricional.</p>
+        </div>
+        <div class="benefit-card">
+            <i class="fas fa-headset"></i>
+            <h3>Atención Expert</h3>
+            <p>Asesoría personalizada vía WhatsApp antes de comprar.</p>
+        </div>
+    </section>
+
+    <section id="catalogo">
+        <h2 class="section-title">Nuestro Catálogo Premium</h2>
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('Todos')">Todos</button>
+            <button class="filter-btn" onclick="filterProducts('Alimentos')">Alimentos</button>
+            <button class="filter-btn" onclick="filterProducts('Veterinaria')">Veterinaria</button>
+            <button class="filter-btn" onclick="filterProducts('Accesorios')">Accesorios</button>
+            <button class="filter-btn" onclick="filterProducts('Medicamentos')">Medicamentos</button>
+        </div>
+        <div class="product-grid" id="product-grid">
+            </div>
+    </section>
+
+    <section class="about" id="nosotros">
+        <div class="about-img">
+            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800" alt="VittaPet Team">
+        </div>
+        <div class="about-text">
+            <h2>Compromiso VittaPet</h2>
+            <p>Con más de 10 años en el sector, nos hemos consolidado como el puente entre el bienestar animal y los mejores productos del mercado global. Nuestra misión es garantizar que cada mascota en la región reciba lo mejor.</p>
+            <br>
+            <p><strong>Seguridad y Respaldo:</strong> Trabajamos directamente con laboratorios y fabricantes para asegurar la autenticidad de cada producto.</p>
+            <br>
+            <div class="testimonials">
+                <p><em>"Excelente atención, el pedido llegó a San Salvador en 48 horas. Muy recomendados."</em><br><strong>- Mariela S.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contacto">
+        <div>
+            <h2>¿Tienes dudas?</h2>
+            <p>Nuestro equipo veterinario está listo para asesorarte en la mejor elección para tu mascota.</p>
+            <br>
+            <p><i class="fas fa-map-marker-alt"></i> Sede Central: San Pedro Sula, Honduras.</p>
+            <p><i class="fas fa-phone"></i> +504 9603-6761</p>
+            <br>
+            <a href="https://wa.me/50496036761" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Chat Directo</a>
+        </div>
+        <div class="contact-form">
+            <input type="text" placeholder="Nombre completo">
+            <input type="email" placeholder="Correo electrónico">
+            <textarea placeholder="¿En qué podemos ayudarte?"></textarea>
+            <button class="btn btn-primary" style="width: 100%;">Enviar Mensaje</button>
+        </div>
+    </section>
+
+    <div class="cart-overlay" id="cart-overlay">
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer"></i>
+            </div>
+            <div class="cart-items" id="cart-items">
+                </div>
+            <div class="cart-footer">
+                <div class="total-row">
+                    <span>Total Referencial:</span>
+                    <span id="cart-total">L 0.00</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="checkout()">
+                    Finalizar pedido vía WhatsApp <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>VittaPet</h4>
+                <p>Líderes en salud animal para Centroamérica.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Países</h4>
+                <ul>
+                    <li>Honduras</li>
+                    <li>Guatemala</li>
+                    <li>El Salvador</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li>Garantía de Envío</li>
+                    <li>Términos y Condiciones</li>
+                    <li>Blog de Salud</li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2024 VittaPet. Todos los derechos reservados.</p>
+    </footer>
+
+    <a href="https://wa.me/50496036761" class="btn-wpp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="toast">Producto añadido al carrito</div>
+
+    <script>
+        // Data Base de Productos
+        const products = [
+            { id: 'AL001', name: 'Pro Plan Adulto 15kg', category: 'Alimentos', priceHNL: 1850, priceUSD: 75, priceGTQ: 585, img: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=400', desc: 'Proteína de alta calidad para perros adultos.' },
+            { id: 'VT002', name: 'Multivitamínico Canino', category: 'Veterinaria', priceHNL: 450, priceUSD: 18, priceGTQ: 140, img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400', desc: 'Refuerza el sistema inmune y pelaje.' },
+            { id: 'AC003', name: 'Cama Ortopédica L', category: 'Accesorios', priceHNL: 1200, priceUSD: 48, priceGTQ: 375, img: 'https://images.unsplash.com/photo-1591584539335-31215df27af7?auto=format&fit=crop&q=80&w=400', desc: 'Máximo confort para el descanso.' },
+            { id: 'MD004', name: 'Antiparasitario Bravecto', category: 'Medicamentos', priceHNL: 980, priceUSD: 40, priceGTQ: 310, img: 'https://images.unsplash.com/photo-1628154791753-a81f3042ac2b?auto=format&fit=crop&q=80&w=400', desc: 'Protección efectiva por 12 semanas.' },
+            { id: 'AL005', name: 'Royal Canin Gato 2kg', category: 'Alimentos', priceHNL: 750, priceUSD: 30, priceGTQ: 235, img: 'https://images.unsplash.com/photo-1569337795454-919356da1057?auto=format&fit=crop&q=80&w=400', desc: 'Especial para gatos de interior.' },
+            { id: 'AC006', name: 'Collar GPS Inteligente', category: 'Accesorios', priceHNL: 2200, priceUSD: 89, priceGTQ: 695, img: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?auto=format&fit=crop&q=80&w=400', desc: 'Localiza a tu mascota en tiempo real.' }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('vittapet_cart')) || [];
+
+        // Renderizar Catálogo
+        function renderProducts(filter = 'Todos') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'Todos' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.name}" class="product-img">
+                        <div class="product-info">
+                            <span class="product-tag">${p.category}</span>
+                            <h3 class="product-name">${p.name}</h3>
+                            <p style="font-size: 0.8rem; margin-bottom: 10px;">${p.desc}</p>
+                            <div class="product-price">
+                                L ${p.priceHNL.toLocaleString()}
+                                <span class="price-alt">$${p.priceUSD} | Q${p.priceGTQ}</span>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('${p.id}')">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterProducts(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(cat);
+        }
+
+        // Lógica del Carrito
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            const inCart = cart.find(p => p.id === id);
+
+            if(inCart) {
+                inCart.qty++;
+            } else {
+                cart.push({...item, qty: 1});
+            }
+            updateCart();
+            showToast();
+        }
+
+        function updateCart() {
+            localStorage.setItem('vittapet_cart', JSON.stringify(cart));
+            const itemsCont = document.getElementById('cart-items');
+            const totalCont = document.getElementById('cart-total');
+            const countCont = document.getElementById('cart-count');
+            
+            itemsCont.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            cart.forEach(item => {
+                total += item.priceHNL * item.qty;
+                count += item.qty;
+                itemsCont.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>L ${item.priceHNL}</p>
+                            <div class="cart-item-qty">
+                                <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+                                <span>${item.qty}</span>
+                                <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                            </div>
+                        </div>
+                        <i class="fas fa-trash" style="color:#ff7675; cursor:pointer" onclick="removeItem('${item.id}')"></i>
+                    </div>
+                `;
+            });
+
+            totalCont.innerText = `L ${total.toLocaleString()}`;
+            countCont.innerText = count;
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(p => p.id === id);
+            item.qty += delta;
+            if(item.qty <= 0) removeItem(id);
+            else updateCart();
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(p => p.id !== id);
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-overlay').classList.toggle('active');
+        }
+
+        function showToast() {
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        // Proceso de Checkout (WhatsApp)
+        function checkout() {
+            if(cart.length === 0) return alert("Tu carrito está vacío");
+
+            let totalHNL = 0;
+            let productList = "";
+
+            cart.forEach(item => {
+                totalHNL += (item.priceHNL * item.qty);
+                productList += `- ${item.name} (Ref: ${item.id}) x${item.qty}\n`;
+            });
+
+            const baseMsg = `Hola 😊 Me interesa cotizar y conocer disponibilidad de estos productos que vi en su web VittaPet:\n\n${productList}\nTotal Referencial: L ${totalHNL.toLocaleString()}\n\n¿Me confirmas disponibilidad y próximos pasos? Quedo atento/a para coordinar los detalles del envío o una llamada. Gracias!`;
+            
+            const url = `https://wa.me/50496036761?text=${encodeURIComponent(baseMsg)}`;
+            window.open(url, '_blank');
+        }
+
+        // Init
+        renderProducts();
+        updateCart();
+    </script>
+</body>
+</html>
